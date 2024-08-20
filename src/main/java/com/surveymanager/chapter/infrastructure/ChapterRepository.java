@@ -49,7 +49,7 @@ public class ChapterRepository implements ChapterService {
     public void updateChapter(Chapter chapter) {
         try {
             String query = """
-                    UPDATE chapter SET updated_at = ?, chapter_number = ?, chapter_title = ?, survey_id = ?}
+                    UPDATE chapter SET updated_at = ?, chapter_number = ?, chapter_title = ?, survey_id = ?
                     WHERE id = ?
                     """;
             PreparedStatement ps = connection.prepareStatement(query);

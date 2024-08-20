@@ -11,12 +11,11 @@ public class Survey {
     private String name;
 
     public Survey() {
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
     }
 
     public Survey(int id, Timestamp created_at, Timestamp updated_at, String description, String name) {
         this.id = id;
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
+        this.created_at = created_at;
         this.updated_at = updated_at;
         this.description = description;
         this.name = name;
@@ -64,5 +63,9 @@ public class Survey {
 
     public void updateDate() {
         this.updated_at = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void createdDate() {
+        this.created_at = new Timestamp(System.currentTimeMillis());
     }
 }

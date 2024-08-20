@@ -72,6 +72,7 @@ public class ChapterUi {
     public void createChapter() {
         Chapter chapter = new Chapter();
         chapter.updateDate();
+        chapter.createdDate();
         chapter.setChapter_number(JOptionPane.showInputDialog(null, "Ingrese el numero del capitulo"));
         chapter.setChapter_title(JOptionPane.showInputDialog(null, "Ingrese el titulo del capitulo"));
         chapter.setSurvey_id(

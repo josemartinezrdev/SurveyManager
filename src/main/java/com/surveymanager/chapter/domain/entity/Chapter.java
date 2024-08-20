@@ -13,13 +13,12 @@ public class Chapter {
     private int survey_id;
 
     public Chapter() {
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
     }
 
     public Chapter(int id, Timestamp created_at, Timestamp updated_at, String chapter_number, String chapter_title,
             int survey_id) {
         this.id = id;
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
+        this.created_at = created_at;
         this.updated_at = updated_at;
         this.chapter_number = chapter_number;
         this.chapter_title = chapter_title;
@@ -76,6 +75,10 @@ public class Chapter {
 
     public void updateDate() {
         this.updated_at = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void createdDate() {
+        this.created_at = new Timestamp(System.currentTimeMillis());
     }
 
 }

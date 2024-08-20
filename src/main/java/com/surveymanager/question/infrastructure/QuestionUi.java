@@ -72,6 +72,7 @@ public class QuestionUi {
     public void createQuestion() {
         Question question = new Question();
         question.updateDate();
+        question.createdDate();
         question.setQuestion_number(JOptionPane.showInputDialog(null, "Ingrese el numero de la pregunta"));
         question.setResponse_type(JOptionPane.showInputDialog(null, "Ingrese el tipo de respuesta de la pregunta"));
         question.setComment_question(JOptionPane.showInputDialog(null, "Ingrese el comentario de la pregunta"));

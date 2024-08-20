@@ -73,6 +73,7 @@ public class SurveyUi {
     public void createSurvey() {
         Survey survey = new Survey();
         survey.updateDate();
+        survey.createdDate();
         survey.setDescription(JOptionPane.showInputDialog(null, "Ingrese la descripcion de la encuesta"));
         survey.setName(JOptionPane.showInputDialog(null, "Ingrese el nombre de la encuesta"));
         createSurveyUseCase.execute(survey);

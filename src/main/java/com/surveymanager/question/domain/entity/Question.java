@@ -13,13 +13,12 @@ public class Question {
     private int chapter_id;
 
     public Question() {
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
     }
 
     public Question(int id, Timestamp created_at, Timestamp updated_at, String question_number, String response_type,
             String comment_question, String question_text, int chapter_id) {
         this.id = id;
-        this.created_at = (this.created_at == null) ? new Timestamp(System.currentTimeMillis()) : this.created_at;
+        this.created_at = created_at;
         this.updated_at = updated_at;
         this.question_number = question_number;
         this.response_type = response_type;
@@ -96,4 +95,7 @@ public class Question {
         this.updated_at = new Timestamp(System.currentTimeMillis());
     }
 
+    public void createdDate() {
+        this.created_at = new Timestamp(System.currentTimeMillis());
+    }
 }

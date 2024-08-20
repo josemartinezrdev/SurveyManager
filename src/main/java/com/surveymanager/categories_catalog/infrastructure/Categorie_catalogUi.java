@@ -1,6 +1,6 @@
 package com.surveymanager.categories_catalog.infrastructure;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -78,14 +78,14 @@ public class Categorie_catalogUi {
 
     public void addCategorie_catalog() {
         String name = JOptionPane.showInputDialog(null, "Categorie_catalog Name:");
+        
         Categorie_catalog categorie_catalog = new Categorie_catalog();
+        categorie_catalog.updateDate();
+        categorie_catalog.createdDate();
 
         categorie_catalog.setName(name);
-        categorie_catalog.setCreated_At(LocalDateTime.now());
-        categorie_catalog.setUpdated_At(LocalDateTime.now());
 
         createCategorie_catalogUseCase.execute(categorie_catalog);
-        categorie_catalog.setCreated_At(LocalDateTime.now());
     }
 
     public Optional<Categorie_catalog> findCategorie_catalog() {
@@ -99,14 +99,11 @@ public class Categorie_catalogUi {
         Optional<Categorie_catalog> categorie_catalogOptional = findCategorie_catalog();
         if (categorie_catalogOptional.isPresent()) {
             Categorie_catalog categorie_catalog = categorie_catalogOptional.get();
-            String newName = JOptionPane.showInputDialog(null, "Ingrese el Nombre de la Categorie_catalog",
-
-            categorie_catalog.getName());
-            if (newName == null)
-            return;
-            
+            String newName = JOptionPane.showInputDialog(null, "Ingrese el Nombre de la Categorie_catalog", categorie_catalog.getName());
             categorie_catalog.setName(newName);
-            categorie_catalog.setUpdated_At(LocalDateTime.now());
+            
+            categorie_catalog.updateDate();
+
             updateCategorie_catalogUseCase.execute(categorie_catalog);
             showCategorie_catalog(categorie_catalogOptional);
         }

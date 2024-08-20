@@ -114,13 +114,15 @@ public class UserUi {
     public void findAllUser() {
         List<User> useres = findAllUserUseCase.execute();
 
-        String[] columns = { "ID", "Username" };
+        String[] columns = {"ID", "Enabled", "Username", "Password" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         for (User user : useres) {
             Object[] row = {
-                    user.getId(),
-                    user.getUsername()
+                user.getId(),
+                user.getEnabled(),
+                user.getPassword(),
+                user.getUsername()
             };
             model.addRow(row);
         }
@@ -136,13 +138,15 @@ public class UserUi {
 
     public void showUser(Optional<User> user) {
 
-        String[] columns = { "ID", "Username" };
+        String[] columns = { "ID", "Enabled", "Username", "Password"  };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         if (user.isPresent()) {
             User userd = user.get();
             Object[] row = {
                     userd.getId(),
+                    userd.getEnabled(),
+                    userd.getPassword(),
                     userd.getUsername()
             };
             model.addRow(row);

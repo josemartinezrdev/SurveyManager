@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.sql.Connection;
 import java.util.Properties;
 
+import java.sql.Timestamp;
+
 import com.surveymanager.categories_catalog.domain.Categorie_catalog;
 import com.surveymanager.categories_catalog.domain.Categorie_catalogService;
 
@@ -13,7 +15,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class Categorie_catalogRepository implements Categorie_catalogService {
 
@@ -38,8 +39,8 @@ public class Categorie_catalogRepository implements Categorie_catalogService {
             String query = "INSERT INTO categories_catalog(id, created_At,updated_At, name) VALUES (?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, categorie_catalog.getId());
-            ps.setTimestamp(2, java.sql.Timestamp.valueOf(categorie_catalog.getCreated_At()));
-            ps.setTimestamp(3, java.sql.Timestamp.valueOf(categorie_catalog.getUpdated_At()));
+            ps.setTimestamp(2, categorie_catalog.getCreated_At());
+            ps.setTimestamp(3, categorie_catalog.getUpdated_At());
             ps.setString(4, categorie_catalog.getName());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -54,7 +55,7 @@ public class Categorie_catalogRepository implements Categorie_catalogService {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, categorie_catalog.getName());
-            ps.setTimestamp(2, java.sql.Timestamp.valueOf(categorie_catalog.getUpdated_At()));
+            ps.setTimestamp(2, categorie_catalog.getUpdated_At());
             ps.setInt(3, categorie_catalog.getId());
             ps.executeUpdate();
 
@@ -85,13 +86,10 @@ public class Categorie_catalogRepository implements Categorie_catalogService {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
 
-                    LocalDateTime createdAt = rs.getTimestamp("created_At").toLocalDateTime();
-                    LocalDateTime updatedAt = rs.getTimestamp("updated_At").toLocalDateTime();
-
                     Categorie_catalog categorie_catalog = new Categorie_catalog(
                             rs.getInt("id"),
-                            createdAt,
-                            updatedAt,
+                            rs.getTimestamp("created_At"),
+                            rs.getTimestamp("updated_At"),
                             rs.getString("name"));
 
                     return Optional.of(categorie_catalog);
@@ -111,13 +109,12 @@ public class Categorie_catalogRepository implements Categorie_catalogService {
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
 
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
+                Categorie_catalog categorie_catalog = new Categorie_catalog(
+                            rs.getInt("id"),
+                            rs.getTimestamp("created_At"),
+                            rs.getTimestamp("updated_At"),
+                            rs.getString("name"));
 
-                LocalDateTime createdAt = rs.getTimestamp("created_At").toLocalDateTime();
-                LocalDateTime updatedAt = rs.getTimestamp("updated_At").toLocalDateTime();
-
-                Categorie_catalog categorie_catalog = new Categorie_catalog(id, createdAt, updatedAt, name);
                 categorie_cataloges.add(categorie_catalog);
             }
         } catch (SQLException e) {

@@ -13,10 +13,10 @@ import java.util.Properties;
 import com.surveymanager.users.domain.User;
 import com.surveymanager.users.domain.UserService;
 
-public class UserRepository implements UserService{
+public class UserRepository implements UserService {
 
     private Connection connection;
-    
+
     public UserRepository() {
         try {
             Properties props = new Properties();
@@ -32,23 +32,24 @@ public class UserRepository implements UserService{
 
     @Override
     public void createUser(User user) {
-       String query = """
-               INSERT INTO users(username, password) VALUES( ?,?)
-               """;
+        String query = """
+                INSERT INTO users(username, enabled, password ) VALUES( ?,?,?)
+                """;
         try {
-             PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
+            ps.setBoolean(2, false);
+            ps.setString(3, user.getPassword());
             ps.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            }
+    }
 
     @Override
     public void updateUser(User user) {
-        
+
         String query = "UPDATE users SET username = ?, password = ? WHERE id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -75,13 +76,14 @@ public class UserRepository implements UserService{
 
     @Override
     public Optional<User> findUserById(int id) {
-          String query = "SELECT id, username, password FROM users WHERE id = ?";
+        String query = "SELECT id, enabled, username, password FROM users WHERE id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    User user = new User(rs.getInt("id"),rs.getBoolean("enabled"), rs.getString("username"), rs.getString("password"));
+                    User user = new User(rs.getInt("id"), rs.getBoolean("enabled"), rs.getString("username"),
+                            rs.getString("password"));
                     return Optional.of(user);
                 }
             }
@@ -94,8 +96,8 @@ public class UserRepository implements UserService{
 
     @Override
     public List<User> findAllUser() {
-         List<User> useres = new ArrayList<>();
-        String query = "SELECT id, username, password FROM users";
+        List<User> useres = new ArrayList<>();
+        String query = "SELECT id, enabled, username, password FROM users";
         try (PreparedStatement ps = connection.prepareStatement(query);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -112,6 +114,5 @@ public class UserRepository implements UserService{
         }
         return useres;
     }
-    
 
 }

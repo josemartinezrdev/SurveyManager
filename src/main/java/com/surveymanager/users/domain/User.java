@@ -2,13 +2,17 @@ package com.surveymanager.users.domain;
 
 public class User {
     private int id;
-    private Boolean enabled = true;
+    private Boolean enabled = false;
     private String username;
     private String password;
+
+    public User() {
+        this.enabled = false;
+    }
     
     public User(int id, Boolean enabled, String username, String password) {
         this.id = id;
-        this.enabled = enabled != null ? enabled : true;
+        this.enabled = false;
         this.username = username;
         this.password = password;
     }
@@ -48,8 +52,7 @@ public class User {
         this.password = password;
     }
 
-    public User() {
-    }
+    
 
 
 }

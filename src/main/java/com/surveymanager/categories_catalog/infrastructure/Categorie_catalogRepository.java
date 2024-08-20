@@ -6,8 +6,6 @@ import java.util.Optional;
 import java.sql.Connection;
 import java.util.Properties;
 
-import java.sql.Timestamp;
-
 import com.surveymanager.categories_catalog.domain.Categorie_catalog;
 import com.surveymanager.categories_catalog.domain.Categorie_catalogService;
 

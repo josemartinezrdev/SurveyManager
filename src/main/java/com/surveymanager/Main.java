@@ -1,69 +1,54 @@
 package com.surveymanager;
 
-import javax.swing.JOptionPane;
-
-import com.surveymanager.categories_catalog.infrastructure.Categorie_catalogUi;
-import com.surveymanager.chapter.infrastructure.ChapterUi;
-import com.surveymanager.question.infrastructure.QuestionUi;
-import com.surveymanager.response.infrastructure.ResponseUi;
-import com.surveymanager.roles.infrastructure.RolUi;
-import com.surveymanager.survey.infrastructure.SurveyUi;
+import com.surveymanager.principalui.Crud;
 import com.surveymanager.users.infrastructure.UserUi;
-import com.surveymanager.users_roles.infrastructure.User_rolUi;
+
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
 
-        int opt = 0;
-        String opts = "1. Surveys\n2. Chapter\n3. Question\n4. User\n5. Role\n6. User Role\n7. Category Catalog\n8. Response\n11. Quit";
+        UserUi userUi = new UserUi();
+
+        String opciones = "1. Sign in \n2. Log in \n3. Exit";
+        int op = -1;
         do {
+
+            String input = JOptionPane.showInputDialog(null, opciones);
+            if (input == null || input.trim().isEmpty()) {
+                return;
+            }
             try {
-                opt = Integer.parseInt(JOptionPane.showInputDialog(null, opts));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error en el valor ingresado");
-                continue;
+                op = Integer.parseInt(input.trim());
+                switch (op) {
+                    case 1:
+                        userUi.addUser();
+                        break;
+                    case 2:
+
+                        if (userUi.findUserByName()) {
+                            JOptionPane.showMessageDialog(null, "Bienvenido Dios Todo Poderoso");
+                            Crud crud = new Crud();
+                            crud.mainCrud();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Simple Mortal");
+                        }
+
+                        break;
+                    case 3:
+
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Error en la opción ingresada", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, ingrese un número válido.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
-            switch (opt) {
-                case 1:
-                    SurveyUi surveyUi = new SurveyUi();
-                    surveyUi.menuSurvey();
-                    break;
-                case 2:
-                    ChapterUi chapterUi = new ChapterUi();
-                    chapterUi.menuChapter();
-                    break;
-                case 3:
-                    QuestionUi questionUi = new QuestionUi();
-                    questionUi.menuQuestion();
-                    break;
-                case 4:
-                    UserUi userUi = new UserUi();
-                    userUi.mainMenu();
-                    break;
-                case 5:
-                    RolUi rolUi = new RolUi();
-                    rolUi.mainMenu();
-                    break;
-                case 6:
-                    User_rolUi user_rolUi = new User_rolUi();
-                    user_rolUi.mainMenu();
-                    break;
-                case 7:
-                    Categorie_catalogUi categorie_catalogUi = new Categorie_catalogUi();
-                    categorie_catalogUi.mainMenu();
-                    break;
-                case 8:
-                    ResponseUi responseUi = new ResponseUi();
-                    responseUi.menuResponse();
-                    break;
-                case 11:
-                    JOptionPane.showMessageDialog(null, "Saliendo...");
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Error en la opcion ingresada");
-                    break;
-            }
-        } while (opt != 11);
+        } while (op != 3);
 
     }
 }

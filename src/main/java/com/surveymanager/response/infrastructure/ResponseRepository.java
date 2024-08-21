@@ -33,7 +33,7 @@ public class ResponseRepository implements ResponseService {
     public void createResponse(Response response) {
         try {
             String query = """
-                    INSERT INTO response_options (created_at, updated_at, optionvalue, typecomponenthtml, commentresponse, optiontext, categorycatalog_id, question_id, parentresponse_id)
+                    INSERT INTO response_options (created_at, updated_at, option_value, typecomponenthtml, comment_response, option_text, categorycatalog_id, question_id, parentresponse_id)
                     VALUES (?,?,?,?,?,?,?,?,?)
                     """;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -56,7 +56,7 @@ public class ResponseRepository implements ResponseService {
     public void updateResponse(Response response) {
         try {
             String query = """
-                    UPDATE response_options SET created_at = ?, updated_at = ?, optionvalue = ?, typecomponenthtml = ?, commentresponse = ?, optiontext = ?, categorycatalog_id = ?, question_id = ?, parentresponse_id = ?
+                    UPDATE response_options SET created_at = ?, updated_at = ?, option_value = ?, typecomponenthtml = ?, comment_response = ?, option_text = ?, categorycatalog_id = ?, question_id = ?, parentresponse_id = ?
                     WHERE id = ?
                     """;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -92,7 +92,7 @@ public class ResponseRepository implements ResponseService {
         List<Response> responses = new ArrayList<>();
         try {
             String query = """
-                    SELECT id, created_at, updated_at, optionvalue, typecomponenthtml, commentresponse, optiontext, categorycatalog_id, question_id, parentresponse_id
+                    SELECT id, created_at, updated_at, option_value, typecomponenthtml, comment_response, option_text, categorycatalog_id, question_id, parentresponse_id
                     FROM response_options ORDER BY id ASC
                     """;
             Statement st = connection.createStatement();
@@ -100,12 +100,12 @@ public class ResponseRepository implements ResponseService {
             while (rs.next()) {
                 Response response = new Response(
                         rs.getInt("id"),
-                        rs.getInt("created_at"),
+                        rs.getInt("option_value"),
+                        rs.getTimestamp("created_at"),
                         rs.getTimestamp("updated_at"),
-                        rs.getTimestamp("optionvalue"),
                         rs.getString("typecomponenthtml"),
-                        rs.getString("commentresponse"),
-                        rs.getString("optiontext"),
+                        rs.getString("comment_response"),
+                        rs.getString("option_text"),
                         rs.getInt("categorycatalog_id"),
                         rs.getInt("question_id"),
                         rs.getInt("parentresponse_id"));
@@ -122,7 +122,7 @@ public class ResponseRepository implements ResponseService {
         Response response = new Response();
         try {
             String query = """
-                    SELECT id, created_at, updated_at, optionvalue, typecomponenthtml, commentresponse, optiontext, categorycatalog_id, question_id, parentresponse_id
+                    SELECT id, created_at, updated_at, option_value, typecomponenthtml, comment_response, option_text, categorycatalog_id, question_id, parentresponse_id
                     FROM response_options WHERE id = ?
                     """;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -130,12 +130,12 @@ public class ResponseRepository implements ResponseService {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 response.setId(rs.getInt("id"));
-                response.setOptionValue(rs.getInt("created_at"));
-                response.setCreated_at(rs.getTimestamp("updated_at"));
-                response.setUpdated_at(rs.getTimestamp("optionvalue"));
+                response.setOptionValue(rs.getInt("option_value"));
+                response.setCreated_at(rs.getTimestamp("created_at"));
+                response.setUpdated_at(rs.getTimestamp("updated_at"));
                 response.setTypeComponentHtml(rs.getString("typecomponenthtml"));
-                response.setCommentResponse(rs.getString("commentresponse"));
-                response.setOptionText(rs.getString("optiontext"));
+                response.setCommentResponse(rs.getString("comment_response"));
+                response.setOptionText(rs.getString("option_text"));
                 response.setCategoryCatalogId(rs.getInt("categorycatalog_id"));
                 response.setQuestionId(rs.getInt("question_id"));
                 response.setParentResponseId(rs.getInt("parentresponse_id"));

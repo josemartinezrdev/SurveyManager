@@ -9,4 +9,5 @@ public interface UserService {
     void deleteUser(int id);
     Optional<User> findUserById(int id);
     List<User> findAllUser();
+    Boolean findUserByName(String name, String password);
 }

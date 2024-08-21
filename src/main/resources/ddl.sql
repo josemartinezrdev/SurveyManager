@@ -15,9 +15,10 @@ USE surveymanager;
 CREATE TABLE users (
     id INT AUTO_INCREMENT,
     enabled BOOLEAN,
-    username VARCHAR(12),
+    username VARCHAR(12) ,
     password VARCHAR(255),
-    CONSTRAINT pk_id_users PRIMARY KEY (id)
+    CONSTRAINT pk_id_users PRIMARY KEY (id),
+    CONSTRAINT Uq_user UNIQUE (username)
 );
 
 CREATE TABLE roles (

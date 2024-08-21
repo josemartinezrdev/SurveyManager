@@ -12,19 +12,21 @@ import javax.swing.table.DefaultTableModel;
 import com.surveymanager.users.aplication.CreateUserUseCase;
 import com.surveymanager.users.aplication.DeleteUserUseCase;
 import com.surveymanager.users.aplication.FindAllUserUseCase;
+import com.surveymanager.users.aplication.FindUserByNameUseCase;
 import com.surveymanager.users.aplication.FindUserUseCase;
 import com.surveymanager.users.aplication.UpdateUserUseCase;
 import com.surveymanager.users.domain.User;
 import com.surveymanager.users.domain.UserService;
 
 public class UserUi {
-    
+
     private UserService userService;
     private CreateUserUseCase createUserUseCase;
     private FindUserUseCase findUserUseCase;
     private UpdateUserUseCase updateUserUseCase;
     private DeleteUserUseCase deleteUserUseCase;
     private FindAllUserUseCase findAllUserUseCase;
+    private FindUserByNameUseCase findUserByNameUseCase;
 
     public UserUi() {
         this.userService = new UserRepository();
@@ -33,8 +35,8 @@ public class UserUi {
         this.findAllUserUseCase = new FindAllUserUseCase(userService);
         this.findUserUseCase = new FindUserUseCase(userService);
         this.updateUserUseCase = new UpdateUserUseCase(userService);
+        this.findUserByNameUseCase = new FindUserByNameUseCase(userService);
     }
-
 
     public void mainMenu() {
         String opciones = "1. Add User\n2. Search user\n3. Update User\n4. Delete User\n5 List Users\n6. Return to Main Menu";
@@ -70,12 +72,11 @@ public class UserUi {
                         break;
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, ingrese un número válido.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } while (op != 6);
     }
-
-
 
     public void addUser() {
         User user = new User();
@@ -89,6 +90,23 @@ public class UserUi {
         Optional<User> user = findUserUseCase.execute(id);
         showUser(user);
         return user;
+    }
+
+    public Boolean findUserByName() {
+        String userName;
+        String password;
+
+        do {
+            userName = JOptionPane.showInputDialog(null, "Ingrese el UserName: ");
+            password = JOptionPane.showInputDialog(null, "Ingrese el password: ");
+
+            if (userName == null || userName.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "UserName y Password no pueden estar vacíos.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } while (userName == null || userName.trim().isEmpty() || password == null || password.trim().isEmpty());
+
+        return findUserByNameUseCase.execute(userName, password);
     }
 
     public void updateUser() {
@@ -114,15 +132,15 @@ public class UserUi {
     public void findAllUser() {
         List<User> useres = findAllUserUseCase.execute();
 
-        String[] columns = {"ID", "Enabled", "Username", "Password" };
+        String[] columns = { "ID", "Enabled", "Username", "Password" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         for (User user : useres) {
             Object[] row = {
-                user.getId(),
-                user.getEnabled(),
-                user.getPassword(),
-                user.getUsername()
+                    user.getId(),
+                    user.getEnabled(),
+                    user.getUsername(),
+                    user.getPassword()
             };
             model.addRow(row);
         }
@@ -138,7 +156,7 @@ public class UserUi {
 
     public void showUser(Optional<User> user) {
 
-        String[] columns = { "ID", "Enabled", "Username", "Password"  };
+        String[] columns = { "ID", "Enabled", "Username", "Password" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         if (user.isPresent()) {
@@ -146,8 +164,8 @@ public class UserUi {
             Object[] row = {
                     userd.getId(),
                     userd.getEnabled(),
-                    userd.getPassword(),
-                    userd.getUsername()
+                    userd.getUsername(),
+                    userd.getPassword()
             };
             model.addRow(row);
         } else {

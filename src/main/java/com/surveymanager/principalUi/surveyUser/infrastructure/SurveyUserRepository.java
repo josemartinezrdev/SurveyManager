@@ -1,40 +1,64 @@
 package com.surveymanager.principalui.surveyUser.infrastructure;
 
+import java.sql.Connection;
 import java.util.List;
 
-import com.surveymanager.survey.domain.entity.Survey;
-import com.surveymanager.survey.domain.service.SurveyService;
+import com.surveymanager.categories_catalog.domain.Categorie_catalog;
+import com.surveymanager.chapter.domain.entity.Chapter;
+import com.surveymanager.principalui.surveyUser.domain.SurveyUser;
+import com.surveymanager.principalui.surveyUser.domain.SurveyUserService;
+import com.surveymanager.question.domain.entity.Question;
+import com.surveymanager.response.domain.entity.Response;
+import com.surveymanager.subresponse.domain.Subresponse;
 
-public class SurveyUserRepository implements SurveyService {
+public class SurveyUserRepository implements SurveyUserService {
+
+    private Connection connection;
+
+    // public SurveyUserRepository() {
+    //     try {
+    //         Properties pros = new
+            
+
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     @Override
-    public void createSurvey(Survey survey) {
+    public List<Chapter> findChapterBySurvey(int id) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSurvey'");
+        throw new UnsupportedOperationException("Unimplemented method 'findChapterBySurvey'");
     }
 
     @Override
-    public void updateSurvey(Survey survey) {
+    public List<Categorie_catalog> findAllCategories() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateSurvey'");
+        throw new UnsupportedOperationException("Unimplemented method 'findAllCategories'");
     }
 
     @Override
-    public void deleteSurvey(int id) {
+    public List<Question> findQuestionByCategory(int idSurvey, int idCategory) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteSurvey'");
+        throw new UnsupportedOperationException("Unimplemented method 'findQuestionByCategory'");
     }
 
     @Override
-    public List<Survey> findAllSurveys() {
+    public List<Response> findResponseByQuestion(int id) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllSurveys'");
+        throw new UnsupportedOperationException("Unimplemented method 'findResponseByQuestion'");
     }
 
     @Override
-    public Survey findByIdSurvey(int id) {
+    public List<Subresponse> findSubresponseByQuestion(int id) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByIdSurvey'");
+        throw new UnsupportedOperationException("Unimplemented method 'findSubresponseByQuestion'");
+    }
+
+    @Override
+    public void createSurveyUser(SurveyUser surveyUser) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createSurveyUser'");
     }
 
 }

@@ -14,7 +14,7 @@ public interface SurveyUserService {
 
     public List<Categorie_catalog> findAllCategories();
 
-    public List<Question> findQuestionByCategory(int id);
+    public List<Question> findQuestionByCategory(int idSurvey, int idCategory);
 
     public List<Response> findResponseByQuestion(int id);
 

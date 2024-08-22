@@ -10,11 +10,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.surveymanager.subresponse.aplication.CreateSubresponseUseCase;
-import com.surveymanager.subresponse.aplication.DeleteSubresponseUseCase;
-import com.surveymanager.subresponse.aplication.FindAllSubresponseUseCase;
-import com.surveymanager.subresponse.aplication.FindSubresponseUseCase;
-import com.surveymanager.subresponse.aplication.UpdateSubresponseUseCase;
+import com.surveymanager.subresponse.application.CreateSubresponseUseCase;
+import com.surveymanager.subresponse.application.DeleteSubresponseUseCase;
+import com.surveymanager.subresponse.application.FindAllSubresponseUseCase;
+import com.surveymanager.subresponse.application.FindSubresponseUseCase;
+import com.surveymanager.subresponse.application.UpdateSubresponseUseCase;
 import com.surveymanager.subresponse.domain.Subresponse;
 import com.surveymanager.subresponse.domain.SubresponseService;
 

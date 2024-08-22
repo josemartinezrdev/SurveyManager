@@ -27,8 +27,8 @@ public class Main {
                     case 2:
 
                         if (userUi.findUserByName()) {
-                            JOptionPane.showMessageDialog(null, "Bienvenido Dios Todo Poderoso");
                             Crud crud = new Crud();
+                            JOptionPane.showMessageDialog(null, "Bienvenido Dios Todo Poderoso");
                             crud.mainCrud();
                         } else {
                             JOptionPane.showMessageDialog(null, "Simple Mortal");

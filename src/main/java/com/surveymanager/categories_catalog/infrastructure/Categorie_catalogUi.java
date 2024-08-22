@@ -11,11 +11,11 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.surveymanager.categories_catalog.aplication.CreateCategorie_catalogUseCase;
-import com.surveymanager.categories_catalog.aplication.DeleteCategorie_catalogUseCase;
-import com.surveymanager.categories_catalog.aplication.FindAllCategorie_catalogUseCase;
-import com.surveymanager.categories_catalog.aplication.FindCategorie_catalogUseCase;
-import com.surveymanager.categories_catalog.aplication.UpdateCategorie_catalogUseCase;
+import com.surveymanager.categories_catalog.application.CreateCategorie_catalogUseCase;
+import com.surveymanager.categories_catalog.application.DeleteCategorie_catalogUseCase;
+import com.surveymanager.categories_catalog.application.FindAllCategorie_catalogUseCase;
+import com.surveymanager.categories_catalog.application.FindCategorie_catalogUseCase;
+import com.surveymanager.categories_catalog.application.UpdateCategorie_catalogUseCase;
 import com.surveymanager.categories_catalog.domain.Categorie_catalog;
 import com.surveymanager.categories_catalog.domain.Categorie_catalogService;
 

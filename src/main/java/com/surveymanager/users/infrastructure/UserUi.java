@@ -9,12 +9,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.surveymanager.users.aplication.CreateUserUseCase;
-import com.surveymanager.users.aplication.DeleteUserUseCase;
-import com.surveymanager.users.aplication.FindAllUserUseCase;
-import com.surveymanager.users.aplication.FindUserByNameUseCase;
-import com.surveymanager.users.aplication.FindUserUseCase;
-import com.surveymanager.users.aplication.UpdateUserUseCase;
+import com.surveymanager.users.application.CreateUserUseCase;
+import com.surveymanager.users.application.DeleteUserUseCase;
+import com.surveymanager.users.application.FindAllUserUseCase;
+import com.surveymanager.users.application.FindUserByNameUseCase;
+import com.surveymanager.users.application.FindUserUseCase;
+import com.surveymanager.users.application.UpdateUserUseCase;
 import com.surveymanager.users.domain.User;
 import com.surveymanager.users.domain.UserService;
 

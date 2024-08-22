@@ -9,11 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.surveymanager.users_roles.aplication.CreateUser_rolUseCase;
-import com.surveymanager.users_roles.aplication.DeleteUser_rolUseCase;
-import com.surveymanager.users_roles.aplication.FindAllUser_rolUseCase;
-import com.surveymanager.users_roles.aplication.FindUser_rolUseCase;
-import com.surveymanager.users_roles.aplication.UpdateUser_rolUseCase;
+import com.surveymanager.users_roles.application.CreateUser_rolUseCase;
+import com.surveymanager.users_roles.application.DeleteUser_rolUseCase;
+import com.surveymanager.users_roles.application.FindAllUser_rolUseCase;
+import com.surveymanager.users_roles.application.FindUser_rolUseCase;
+import com.surveymanager.users_roles.application.UpdateUser_rolUseCase;
 import com.surveymanager.users_roles.domain.User_rol;
 import com.surveymanager.users_roles.domain.User_rolService;
 

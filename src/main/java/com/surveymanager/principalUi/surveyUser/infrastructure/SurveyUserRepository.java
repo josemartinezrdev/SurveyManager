@@ -5,7 +5,7 @@ import java.util.List;
 import com.surveymanager.survey.domain.entity.Survey;
 import com.surveymanager.survey.domain.service.SurveyService;
 
-public class SurveyUserRepository implements SurveyService{
+public class SurveyUserRepository implements SurveyService {
 
     @Override
     public void createSurvey(Survey survey) {

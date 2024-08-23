@@ -12,12 +12,19 @@ import com.surveymanager.categories_catalog.domain.Categorie_catalog;
 import com.surveymanager.categories_catalog.domain.Categorie_catalogService;
 import com.surveymanager.categories_catalog.infrastructure.Categorie_catalogRepository;
 import com.surveymanager.chapter.domain.entity.Chapter;
+import com.surveymanager.principalui.surveyUser.application.CreateSurveyUserUseCase;
+import com.surveymanager.principalui.surveyUser.application.FindAllSubresponseUseCase;
 import com.surveymanager.principalui.surveyUser.application.FindChapterUseCase;
 import com.surveymanager.principalui.surveyUser.application.FindQuestionUseCase;
 import com.surveymanager.principalui.surveyUser.application.FindResponseUseCase;
+import com.surveymanager.principalui.surveyUser.domain.SurveyUser;
 import com.surveymanager.principalui.surveyUser.domain.SurveyUserService;
 import com.surveymanager.question.domain.entity.Question;
+import com.surveymanager.response.application.FindByIdResponseUseCase;
 import com.surveymanager.response.domain.entity.Response;
+import com.surveymanager.response.domain.service.ResponseService;
+import com.surveymanager.response.infrastructure.ResponseRepository;
+import com.surveymanager.subresponse.domain.Subresponse;
 import com.surveymanager.survey.application.FindAllSurveyUseCase;
 import com.surveymanager.survey.domain.entity.Survey;
 import com.surveymanager.survey.domain.service.SurveyService;
@@ -27,12 +34,16 @@ public class SurveyUserUi {
     private SurveyUserService surveyUserService;
     private SurveyService surveyService;
     private Categorie_catalogService categorie_catalogService;
+    private ResponseService responseService;
 
     private FindChapterUseCase findChapterUseCase;
     private FindAllSurveyUseCase findAllSurveyUseCase;
     private FindAllCategorie_catalogUseCase findAllCategories;
     private FindQuestionUseCase findQuestionUseCase;
     private FindResponseUseCase findResponseUseCase;
+    private FindAllSubresponseUseCase findAllSubresponseUseCase;
+    private FindByIdResponseUseCase findByIdResponseUseCase;
+    private CreateSurveyUserUseCase createSurveyUserUseCase;
 
     public SurveyUserUi() {
         this.surveyUserService = new SurveyUserRepository();
@@ -43,6 +54,10 @@ public class SurveyUserUi {
         this.findAllCategories = new FindAllCategorie_catalogUseCase(categorie_catalogService);
         this.findQuestionUseCase = new FindQuestionUseCase(surveyUserService);
         this.findResponseUseCase = new FindResponseUseCase(surveyUserService);
+        this.findAllSubresponseUseCase = new FindAllSubresponseUseCase(surveyUserService);
+        this.responseService = new ResponseRepository();
+        this.findByIdResponseUseCase = new FindByIdResponseUseCase(responseService);
+        this.createSurveyUserUseCase = new CreateSurveyUserUseCase(surveyUserService);
     }
 
     public void start() {
@@ -57,7 +72,19 @@ public class SurveyUserUi {
             }
             switch (opt) {
                 case 1:
-                    showSurveys(findAllSurveyUseCase.execute());
+                    SurveyUser surveyUser = new SurveyUser();
+                    int idSurvey = showSurveys(findAllSurveyUseCase.execute());
+                    int idChapter = showChapters(findChapterUseCase.execute(idSurvey));
+                    int idcat = showCategories(findAllCategories.execute());
+                    int idQue = showQuestions(findQuestionUseCase.execute(idChapter, idcat));
+                    Response response = showResponseOpt(findResponseUseCase.execute(idQue));
+                    int idSub = showSubResponseOpt(findAllSubresponseUseCase.execute(response.getId()));
+
+                    surveyUser.setResponse_id(response.getId());
+                    surveyUser.setSubresponse_id(idSub);
+                    surveyUser.setResponsetext(response.getOptionText());
+                    createSurveyUserUseCase.execute(surveyUser);
+
                     break;
                 case 2:
                     break;
@@ -68,7 +95,7 @@ public class SurveyUserUi {
         } while (opt != 2);
     }
 
-    public void showSurveys(List<Survey> surveys) {
+    public int showSurveys(List<Survey> surveys) {
         Map<String, Integer> map = new HashMap<>();
         JComboBox<String> dropDown = new JComboBox<>();
         surveys.forEach(survey -> {
@@ -81,11 +108,12 @@ public class SurveyUserUi {
         if (result == JOptionPane.OK_OPTION) {
             String text = (String) dropDown.getSelectedItem();
             int id = map.get(text);
-            showChapters(findChapterUseCase.execute(id));
+            return id;
         }
+        return 0;
     }
 
-    public void showChapters(List<Chapter> chapters) {
+    public int showChapters(List<Chapter> chapters) {
         Map<String, Integer> map = new HashMap<>();
         JComboBox<String> dropDown = new JComboBox<>();
         chapters.forEach(chapter -> {
@@ -98,9 +126,9 @@ public class SurveyUserUi {
         if (result == JOptionPane.OK_OPTION) {
             String text = (String) dropDown.getSelectedItem();
             int idcha = map.get(text);
-            int idcat = showCategories(findAllCategories.execute());
-            showQuestions(findQuestionUseCase.execute(idcha, idcat));
+            return idcha;
         }
+        return 0;
     }
 
     public int showCategories(List<Categorie_catalog> categories) {
@@ -121,7 +149,7 @@ public class SurveyUserUi {
         return 0;
     }
 
-    public void showQuestions(List<Question> questions) {
+    public int showQuestions(List<Question> questions) {
         Map<String, Integer> map = new HashMap<>();
         JComboBox<String> dropDown = new JComboBox<>();
         questions.forEach(question -> {
@@ -134,11 +162,12 @@ public class SurveyUserUi {
         if (result == JOptionPane.OK_OPTION) {
             String text = (String) dropDown.getSelectedItem();
             int id = map.get(text);
-            showResponseOpt(findResponseUseCase.execute(id));
+            return id;
         }
+        return 0;
     }
 
-    public void showResponseOpt(List<Response> responses) {
+    public Response showResponseOpt(List<Response> responses) {
 
         Map<String, Integer> map = new HashMap<>();
         JComboBox<String> dropDown = new JComboBox<>();
@@ -152,7 +181,30 @@ public class SurveyUserUi {
         if (result == JOptionPane.OK_OPTION) {
             String text = (String) dropDown.getSelectedItem();
             int id = map.get(text);
-            System.out.println(id);
+
+            Response response = findByIdResponseUseCase.execute(id);
+            return response;
         }
+        return null;
+    }
+
+    public int showSubResponseOpt(List<Subresponse> subresponses) {
+
+        Map<String, Integer> map = new HashMap<>();
+        JComboBox<String> dropDown = new JComboBox<>();
+        subresponses.forEach(subresponse -> {
+            String row = subresponse.getId() + " - " + subresponse.getSubresponse_text();
+            dropDown.addItem(row);
+            map.put(row, subresponse.getId());
+        });
+        int result = JOptionPane.showConfirmDialog(null, dropDown, "Seleccione la subrespuesta",
+            
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            String text = (String) dropDown.getSelectedItem();
+            int id = map.get(text);
+            return id;
+        }
+        return 0;
     }
 }

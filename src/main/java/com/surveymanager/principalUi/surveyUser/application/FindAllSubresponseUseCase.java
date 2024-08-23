@@ -5,10 +5,10 @@ import java.util.List;
 import com.surveymanager.principalui.surveyUser.domain.SurveyUserService;
 import com.surveymanager.subresponse.domain.Subresponse;
 
-public class FindSubresponseUseCase {
+public class FindAllSubresponseUseCase {
     private final SurveyUserService surveyUserService;
 
-    public FindSubresponseUseCase(SurveyUserService surveyUserService) {
+    public FindAllSubresponseUseCase(SurveyUserService surveyUserService) {
         this.surveyUserService = surveyUserService;
     }
 

@@ -126,6 +126,7 @@ public class SurveyUserRepository implements SurveyUserService {
             while (rs.next()) {
                 Response response = new Response();
                 response.setId(rs.getInt("id"));
+                response.setOptionText(rs.getString("option_text"));
                 responses.add(response);
             }
         } catch (Exception e) {
@@ -136,14 +137,50 @@ public class SurveyUserRepository implements SurveyUserService {
 
     @Override
     public List<Subresponse> findSubresponseByQuestion(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findSubresponseByQuestion'");
+        List<Subresponse> subresponses = new ArrayList<>();
+        try {
+            String query = """
+                    SELECT
+                        id,
+                        subresponse_number,
+                        created_at,
+                        responseoptions_id,
+                        updated_at,
+                        component_html,
+                        subresponse_text
+                    FROM subresponse_options
+                    WHERE responseoptions_id = ?
+                    """;
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Subresponse subresponse = new Subresponse();
+                subresponse.setId(rs.getInt("id"));
+                subresponse.setSubresponse_text(rs.getString("subresponse_text"));
+                subresponses.add(subresponse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return subresponses;
     }
 
     @Override
     public void createSurveyUser(SurveyUser surveyUser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createSurveyUser'");
+        try {
+            String query = """
+                    INSERT INTO response_question (response_id, subresponse_id, responsetext) VALUES (?,?,?)
+                    """;
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, surveyUser.getResponse_id());
+            ps.setInt(2, surveyUser.getSubresponse_id());
+            ps.setString(3, surveyUser.getResponsetext());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

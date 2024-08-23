@@ -77,8 +77,12 @@ public class QuestionUi {
         question.setResponse_type(JOptionPane.showInputDialog(null, "Ingrese el tipo de respuesta de la pregunta"));
         question.setComment_question(JOptionPane.showInputDialog(null, "Ingrese el comentario de la pregunta"));
         question.setQuestion_text(JOptionPane.showInputDialog(null, "Ingrese el texto de la pregunta"));
-        question.setChapter_id(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo de la pregunta")));
+        try {
+            question.setChapter_id(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo de la pregunta")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
 
         createQuestionUseCase.execute(question);
     }
@@ -107,7 +111,12 @@ public class QuestionUi {
     }
 
     public Question findByIdQuestion() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Question question = findByIdQuestionUseCase.execute(id);
         showByIdQuestion(question);
         return question;
@@ -120,8 +129,12 @@ public class QuestionUi {
         question.setResponse_type(JOptionPane.showInputDialog(null, "Ingrese el tipo de respuesta de la pregunta"));
         question.setComment_question(JOptionPane.showInputDialog(null, "Ingrese el comentario de la pregunta"));
         question.setQuestion_text(JOptionPane.showInputDialog(null, "Ingrese el texto de la pregunta"));
-        question.setChapter_id(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo de la pregunta")));
+        try {
+            question.setChapter_id(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo de la pregunta")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         updateQuestionUseCase.execute(question);
     }
 

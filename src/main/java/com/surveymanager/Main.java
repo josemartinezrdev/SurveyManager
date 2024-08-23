@@ -26,9 +26,13 @@ public class Main {
                         userUi.addUser();
                         break;
                     case 2:
-                        if (userUi.findUserByName()) {
-                            Crud crud = new Crud();
+                        Boolean isAdmin = userUi.findUserByName();
+
+                        if (isAdmin == null) {
+                            JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+                        } else if (isAdmin) {
                             JOptionPane.showMessageDialog(null, "Bienvenido Dios Todo Poderoso");
+                            Crud crud = new Crud();
                             crud.mainCrud();
                         } else {
                             JOptionPane.showMessageDialog(null, "Simple Mortal");

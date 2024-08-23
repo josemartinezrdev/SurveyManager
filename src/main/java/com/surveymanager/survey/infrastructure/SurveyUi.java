@@ -100,7 +100,13 @@ public class SurveyUi {
     }
 
     public Survey findByIdSurvey() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la encuesta"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la encuesta"));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Survey survey = findByIdSurveyUseCase.execute(id);
         showByIdSurvey(survey);
         return survey;

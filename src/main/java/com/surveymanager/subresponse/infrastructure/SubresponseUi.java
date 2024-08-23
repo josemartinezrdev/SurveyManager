@@ -78,10 +78,18 @@ public class SubresponseUi {
 
     public void addSubresponse() {
 
-        int subresponse_number = Integer.parseInt(JOptionPane.showInputDialog(null, " subresponse_number:"));
         String component_html = JOptionPane.showInputDialog(null, " component_html:");
         String subresponse_text = JOptionPane.showInputDialog(null, " subresponse_text:");
-        int responseoptions_id = Integer.parseInt(JOptionPane.showInputDialog(null, " responseoptions_id:"));
+
+        int subresponse_number = 0;
+        int responseoptions_id = 0;
+
+        try {
+            subresponse_number = Integer.parseInt(JOptionPane.showInputDialog(null, " subresponse_number:"));
+            responseoptions_id = Integer.parseInt(JOptionPane.showInputDialog(null, " responseoptions_id:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
 
         Subresponse subresponse = new Subresponse();
         subresponse.updateDate();
@@ -96,7 +104,12 @@ public class SubresponseUi {
     }
 
     public Optional<Subresponse> findSubresponse() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Subresponse:"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Subresponse:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Optional<Subresponse> subresponse = findSubresponseUseCase.execute(id);
         showSubresponse(subresponse);
         return subresponse;
@@ -106,14 +119,23 @@ public class SubresponseUi {
         Optional<Subresponse> subresponseOptional = findSubresponse();
         if (subresponseOptional.isPresent()) {
             Subresponse subresponse = subresponseOptional.get();
-            int subresponse_number = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Ingrese subresponse_number", subresponse.getSubresponse_number()));
             String component_html = JOptionPane.showInputDialog(null, "Ingrese el component_html",
                     subresponse.getComponent_html());
             String subresponse_text = JOptionPane.showInputDialog(null, "Ingrese subresponse_text",
                     subresponse.getSubresponse_text());
-            int responseoptions_id = Integer.parseInt(JOptionPane.showInputDialog(null,
-                    "Ingrese responseoptions_id", subresponse.getResponseoptions_id()));
+
+            int subresponse_number = 0;
+            int responseoptions_id = 0;
+
+            try {
+
+                subresponse_number = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Ingrese subresponse_number", subresponse.getSubresponse_number()));
+                responseoptions_id = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Ingrese responseoptions_id", subresponse.getResponseoptions_id()));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+            }
 
             subresponse.setSubresponse_number(subresponse_number);
             subresponse.setComponent_html(component_html);

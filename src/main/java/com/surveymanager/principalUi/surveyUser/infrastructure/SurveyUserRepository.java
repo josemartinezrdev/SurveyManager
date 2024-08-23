@@ -168,13 +168,19 @@ public class SurveyUserRepository implements SurveyUserService {
 
     @Override
     public void createSurveyUser(SurveyUser surveyUser) {
-        try {
-            String query = """
-                    INSERT INTO response_question (response_id, subresponse_id, responsetext) VALUES (?,?,?)
-                    """;
-            PreparedStatement ps = connection.prepareStatement(query);
+        String query = """
+                INSERT INTO response_question (response_id, subresponse_id, responsetext) VALUES (?,?,?)
+                """;
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, surveyUser.getResponse_id());
-            ps.setInt(2, surveyUser.getSubresponse_id());
+
+            // Manejar subresponse_id nulo
+            if (surveyUser.getSubresponse_id() == null) {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            } else {
+                ps.setInt(2, surveyUser.getSubresponse_id());
+            }
+
             ps.setString(3, surveyUser.getResponsetext());
             ps.executeUpdate();
 

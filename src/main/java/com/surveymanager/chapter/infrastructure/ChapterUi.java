@@ -75,8 +75,13 @@ public class ChapterUi {
         chapter.createdDate();
         chapter.setChapter_number(JOptionPane.showInputDialog(null, "Ingrese el numero del capitulo"));
         chapter.setChapter_title(JOptionPane.showInputDialog(null, "Ingrese el titulo del capitulo"));
-        chapter.setSurvey_id(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese id de la encuesta del capitulo")));
+        try {
+            chapter.setSurvey_id(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese id de la encuesta del capitulo")));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         createChapterUseCase.execute(chapter);
     }
 
@@ -102,7 +107,13 @@ public class ChapterUi {
     }
 
     public Chapter findByIdChapter() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del capitulo"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Chapter chapter = findByIdChapterUseCase.execute(id);
         showByIdChapter(chapter);
         return chapter;
@@ -113,8 +124,13 @@ public class ChapterUi {
         chapter.updateDate();
         chapter.setChapter_number(JOptionPane.showInputDialog(null, "Ingrese el numero del capitulo"));
         chapter.setChapter_title(JOptionPane.showInputDialog(null, "Ingrese el titulo del capitulo"));
-        chapter.setSurvey_id(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la encuesta del capitulo")));
+        try {
+            chapter.setSurvey_id(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la encuesta del capitulo")));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         updateChapterUseCase.execute(chapter);
     }
 

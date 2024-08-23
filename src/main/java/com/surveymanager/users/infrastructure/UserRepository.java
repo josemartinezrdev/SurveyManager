@@ -93,12 +93,13 @@ public class UserRepository implements UserService {
         }
         return Optional.empty();
     }
+
     @Override
     public Boolean findUserByName(String name, String password) {
         boolean enabled = false;
         try {
             String query = """
-                    SELECT enabled FROM users 
+                    SELECT enabled FROM users
                     WHERE username = ? and password = ?
                     """;
             PreparedStatement ps = connection.prepareStatement(query);
@@ -106,16 +107,17 @@ public class UserRepository implements UserService {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 enabled = rs.getBoolean("enabled");
-                
+                return enabled;
+            } else {
+                return null; // Aqui si no encuentra usuarios entonces devuelve null
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return enabled;
-        
+        return null;
     }
 
     @Override
@@ -138,7 +140,5 @@ public class UserRepository implements UserService {
         }
         return useres;
     }
-
-   
 
 }

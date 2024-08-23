@@ -71,17 +71,22 @@ public class ResponseUi {
 
     public void createResponse() {
         Response response = new Response();
+
         response.updateDate();
         response.createdDate();
-        response.setOptionValue(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el value option")));
-        response.setTypeComponentHtml(JOptionPane.showInputDialog(null, "Ingrese el typecomponent"));
-        response.setCommentResponse(JOptionPane.showInputDialog(null, "Ingrese el comment response"));
-        response.setOptionText(JOptionPane.showInputDialog(null, "Ingrese el option text"));
-        response.setCategoryCatalogId(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la categoria")));
-        response.setQuestionId(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta")));
-        response.setParentResponseId(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del parent reponse")));
+        try {
+            response.setOptionValue(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el value option")));
+            response.setTypeComponentHtml(JOptionPane.showInputDialog(null, "Ingrese el typecomponent"));
+            response.setCommentResponse(JOptionPane.showInputDialog(null, "Ingrese el comment response"));
+            response.setOptionText(JOptionPane.showInputDialog(null, "Ingrese el option text"));
+            response.setCategoryCatalogId(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la categoria")));
+            response.setQuestionId(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta")));
+            response.setParentResponseId(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del parent reponse")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
 
         createResponseUseCase.execute(response);
     }
@@ -113,7 +118,13 @@ public class ResponseUi {
     }
 
     public Response findByIdResponse() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la respuesta"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la respuesta"));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Response response = findByIdResponseUseCase.execute(id);
         showByIdResponse(response);
         return response;
@@ -122,15 +133,19 @@ public class ResponseUi {
     public void updateResponse() {
         Response response = findByIdResponse();
         response.updateDate();
-        response.setOptionValue(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el value option")));
-        response.setTypeComponentHtml(JOptionPane.showInputDialog(null, "Ingrese el typecomponent"));
-        response.setCommentResponse(JOptionPane.showInputDialog(null, "Ingrese el comment response"));
-        response.setOptionText(JOptionPane.showInputDialog(null, "Ingrese el option text"));
-        response.setCategoryCatalogId(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la categoria")));
-        response.setQuestionId(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta")));
-        response.setParentResponseId(
-                Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del parent reponse")));
+        try {
+            response.setOptionValue(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el value option")));
+            response.setTypeComponentHtml(JOptionPane.showInputDialog(null, "Ingrese el typecomponent"));
+            response.setCommentResponse(JOptionPane.showInputDialog(null, "Ingrese el comment response"));
+            response.setOptionText(JOptionPane.showInputDialog(null, "Ingrese el option text"));
+            response.setCategoryCatalogId(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la categoria")));
+            response.setQuestionId(Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID de la pregunta")));
+            response.setParentResponseId(
+                    Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del parent reponse")));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         updateResponseUseCase.execute(response);
     }
 

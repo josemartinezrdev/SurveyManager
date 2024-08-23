@@ -3,13 +3,13 @@ package com.surveymanager.principalui.surveyUser.domain;
 public class SurveyUser {
     private int id;
     private int response_id;
-    private int subresponse_id;
+    private Integer subresponse_id;
     private String responsetext;
 
     public SurveyUser() {
     }
 
-    public SurveyUser(int id, int response_id, int subresponse_id, String responsetext) {
+    public SurveyUser(int id, int response_id, Integer subresponse_id, String responsetext) {
         this.id = id;
         this.response_id = response_id;
         this.subresponse_id = subresponse_id;
@@ -32,11 +32,11 @@ public class SurveyUser {
         this.response_id = response_id;
     }
 
-    public int getSubresponse_id() {
+    public Integer getSubresponse_id() {
         return this.subresponse_id;
     }
 
-    public void setSubresponse_id(int subresponse_id) {
+    public void setSubresponse_id(Integer subresponse_id) {
         this.subresponse_id = subresponse_id;
     }
 

@@ -1,6 +1,5 @@
 package com.surveymanager.categories_catalog.infrastructure;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +77,7 @@ public class Categorie_catalogUi {
 
     public void addCategorie_catalog() {
         String name = JOptionPane.showInputDialog(null, "Categorie_catalog Name:");
-        
+
         Categorie_catalog categorie_catalog = new Categorie_catalog();
         categorie_catalog.updateDate();
         categorie_catalog.createdDate();
@@ -89,7 +88,13 @@ public class Categorie_catalogUi {
     }
 
     public Optional<Categorie_catalog> findCategorie_catalog() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Categorie_catalog:"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Categorie_catalog:"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Optional<Categorie_catalog> categorie_catalog = findCategorie_catalogUseCase.execute(id);
         showCategorie_catalog(categorie_catalog);
         return categorie_catalog;
@@ -99,9 +104,10 @@ public class Categorie_catalogUi {
         Optional<Categorie_catalog> categorie_catalogOptional = findCategorie_catalog();
         if (categorie_catalogOptional.isPresent()) {
             Categorie_catalog categorie_catalog = categorie_catalogOptional.get();
-            String newName = JOptionPane.showInputDialog(null, "Ingrese el Nombre de la Categorie_catalog", categorie_catalog.getName());
+            String newName = JOptionPane.showInputDialog(null, "Ingrese el Nombre de la Categorie_catalog",
+                    categorie_catalog.getName());
             categorie_catalog.setName(newName);
-            
+
             categorie_catalog.updateDate();
 
             updateCategorie_catalogUseCase.execute(categorie_catalog);
@@ -129,8 +135,7 @@ public class Categorie_catalogUi {
     public List<Categorie_catalog> findAllCategorie_catalog() {
         List<Categorie_catalog> categorie_cataloges = findAllCategorie_catalogUseCase.execute();
 
-        String[] columns = { "Id","CreatedAt","UpdatedAt","Name" };
-
+        String[] columns = { "Id", "CreatedAt", "UpdatedAt", "Name" };
 
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
@@ -155,7 +160,7 @@ public class Categorie_catalogUi {
 
     public void showCategorie_catalog(Optional<Categorie_catalog> categorie_catalog) {
 
-        String[] columns = { "Id","CreatedAt","UpdatedAt","Name" };
+        String[] columns = { "Id", "CreatedAt", "UpdatedAt", "Name" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         if (categorie_catalog.isPresent()) {

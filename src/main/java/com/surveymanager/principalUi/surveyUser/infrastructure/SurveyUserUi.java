@@ -32,30 +32,33 @@ import com.surveymanager.survey.infrastructure.SurveyRepository;
 
 public class SurveyUserUi {
     private SurveyUserService surveyUserService;
+
     private SurveyService surveyService;
+    private FindAllSurveyUseCase findAllSurveyUseCase;
+
     private Categorie_catalogService categorie_catalogService;
+    private FindAllCategorie_catalogUseCase findAllCategories;
+
     private ResponseService responseService;
+    private FindByIdResponseUseCase findByIdResponseUseCase;
 
     private FindChapterUseCase findChapterUseCase;
-    private FindAllSurveyUseCase findAllSurveyUseCase;
-    private FindAllCategorie_catalogUseCase findAllCategories;
     private FindQuestionUseCase findQuestionUseCase;
     private FindResponseUseCase findResponseUseCase;
     private FindAllSubresponseUseCase findAllSubresponseUseCase;
-    private FindByIdResponseUseCase findByIdResponseUseCase;
     private CreateSurveyUserUseCase createSurveyUserUseCase;
 
     public SurveyUserUi() {
         this.surveyUserService = new SurveyUserRepository();
-        this.findChapterUseCase = new FindChapterUseCase(surveyUserService);
+        this.responseService = new ResponseRepository();
         this.surveyService = new SurveyRepository();
+        this.findChapterUseCase = new FindChapterUseCase(surveyUserService);
         this.findAllSurveyUseCase = new FindAllSurveyUseCase(surveyService);
         this.categorie_catalogService = new Categorie_catalogRepository();
         this.findAllCategories = new FindAllCategorie_catalogUseCase(categorie_catalogService);
         this.findQuestionUseCase = new FindQuestionUseCase(surveyUserService);
         this.findResponseUseCase = new FindResponseUseCase(surveyUserService);
         this.findAllSubresponseUseCase = new FindAllSubresponseUseCase(surveyUserService);
-        this.responseService = new ResponseRepository();
         this.findByIdResponseUseCase = new FindByIdResponseUseCase(responseService);
         this.createSurveyUserUseCase = new CreateSurveyUserUseCase(surveyUserService);
     }
@@ -81,7 +84,11 @@ public class SurveyUserUi {
                     int idSub = showSubResponseOpt(findAllSubresponseUseCase.execute(response.getId()));
 
                     surveyUser.setResponse_id(response.getId());
-                    surveyUser.setSubresponse_id(idSub);
+
+                    // Convertir 0 a null antes de asignar
+                    Integer subresponseId = (idSub == 0) ? null : idSub;
+                    surveyUser.setSubresponse_id(subresponseId);
+
                     surveyUser.setResponsetext(response.getOptionText());
                     createSurveyUserUseCase.execute(surveyUser);
 
@@ -189,6 +196,11 @@ public class SurveyUserUi {
     }
 
     public int showSubResponseOpt(List<Subresponse> subresponses) {
+        if (subresponses.isEmpty()) {
+            // No hay subrespuestas, retornar 0 o cualquier valor predeterminado que
+            // represente la ausencia de selección.
+            return 0;
+        }
 
         Map<String, Integer> map = new HashMap<>();
         JComboBox<String> dropDown = new JComboBox<>();
@@ -198,13 +210,15 @@ public class SurveyUserUi {
             map.put(row, subresponse.getId());
         });
         int result = JOptionPane.showConfirmDialog(null, dropDown, "Seleccione la subrespuesta",
-            
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             String text = (String) dropDown.getSelectedItem();
             int id = map.get(text);
             return id;
         }
+        // El usuario canceló la selección, se puede considerar que no se ha
+        // seleccionado ninguna opción.
         return 0;
     }
+
 }

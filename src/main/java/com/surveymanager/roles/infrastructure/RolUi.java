@@ -84,7 +84,12 @@ public class RolUi {
     }
 
     public Optional<Rol> findRol() {
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Rol:"));
+        int id = 0;
+        try {
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID del Rol:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
         Optional<Rol> rol = findRolUseCase.execute(id);
         showRol(rol);
         return rol;

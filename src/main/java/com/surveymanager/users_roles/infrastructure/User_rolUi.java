@@ -75,8 +75,17 @@ public class User_rolUi {
     }
 
     public void addUser_rol() {
-        int id_user = Integer.parseInt(JOptionPane.showInputDialog(null, "id_user Name:"));
-        int id_rol = Integer.parseInt(JOptionPane.showInputDialog(null, "id_rol Name:"));
+
+        int id_user = 0;
+        int id_rol = 0;
+
+        try {
+            id_user = Integer.parseInt(JOptionPane.showInputDialog(null, "id_user Name:"));
+            id_rol = Integer.parseInt(JOptionPane.showInputDialog(null, "id_rol Name:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
+
         User_rol user_rol = new User_rol();
         user_rol.setUser_id(id_user);
         user_rol.setRole_id(id_rol);
@@ -86,8 +95,16 @@ public class User_rolUi {
     }
 
     public Optional<User_rol> findUser_rol() {
-        int id_user = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID_User:"));
-        int id_role = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID_rol:"));
+
+        int id_user = 0;
+        int id_role = 0;
+        try {
+            id_user = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID_User:"));
+            id_role = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el ID_rol:"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+        }
+
         Optional<User_rol> user_rol = findUser_rolUseCase.execute(id_user, id_role);
         showUser_rol(user_rol);
         return user_rol;
@@ -97,10 +114,16 @@ public class User_rolUi {
         Optional<User_rol> user_rolOptional = findUser_rol();
         if (user_rolOptional.isPresent()) {
             User_rol user_rol = user_rolOptional.get();
-            int id_user = Integer
-                    .parseInt(JOptionPane.showInputDialog(null, "Ingrese el id_user", user_rol.getUser_id()));
-            int id_rol = Integer
-                    .parseInt(JOptionPane.showInputDialog(null, "Ingrese el id_rol", user_rol.getUser_id()));
+            int id_user = 0;
+            int id_rol = 0;
+            try {
+                id_user = Integer
+                        .parseInt(JOptionPane.showInputDialog(null, "Ingrese el id_user", user_rol.getUser_id()));
+                id_rol = Integer
+                        .parseInt(JOptionPane.showInputDialog(null, "Ingrese el id_rol", user_rol.getUser_id()));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error en el dato ingresado");
+            }
             user_rol.setUser_id(id_user);
             user_rol.setRole_id(id_rol);
             updateUser_rolUseCase.execute(user_rol);

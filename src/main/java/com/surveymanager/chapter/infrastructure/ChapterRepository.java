@@ -117,8 +117,8 @@ public class ChapterRepository implements ChapterService {
                 chapter.setId(rs.getInt("id"));
                 chapter.setCreated_at(rs.getTimestamp("created_at"));
                 chapter.setUpdated_at(rs.getTimestamp("updated_at"));
-                chapter.setChapter_number(rs.getString("description"));
-                chapter.setChapter_title(rs.getString("n1ame"));
+                chapter.setChapter_number(rs.getString("chapter_number"));
+                chapter.setChapter_title(rs.getString("chapter_title"));
                 chapter.setSurvey_id(rs.getInt("survey_id"));
             }
         } catch (Exception e) {

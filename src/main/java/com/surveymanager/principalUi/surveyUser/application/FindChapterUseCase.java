@@ -12,7 +12,7 @@ public class FindChapterUseCase {
         this.surveyUserService = surveyUserService;
     }
 
-    public  List<Chapter> execute(int id){
+    public List<Chapter> execute(int id){
        return surveyUserService.findChapterBySurvey(id);
     }
 

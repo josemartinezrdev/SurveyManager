@@ -1,6 +1,7 @@
 package com.surveymanager;
 
 import com.surveymanager.principalui.Crud;
+import com.surveymanager.principalui.surveyUser.infrastructure.SurveyUserUi;
 import com.surveymanager.users.infrastructure.UserUi;
 
 import javax.swing.JOptionPane;
@@ -25,20 +26,18 @@ public class Main {
                         userUi.addUser();
                         break;
                     case 2:
-
                         if (userUi.findUserByName()) {
                             Crud crud = new Crud();
                             JOptionPane.showMessageDialog(null, "Bienvenido Dios Todo Poderoso");
                             crud.mainCrud();
                         } else {
                             JOptionPane.showMessageDialog(null, "Simple Mortal");
+                            SurveyUserUi surveyUserUi = new SurveyUserUi();
+                            surveyUserUi.start();
                         }
-
                         break;
                     case 3:
-
                         break;
-
                     default:
                         JOptionPane.showMessageDialog(null, "Error en la opción ingresada", "Error",
                                 JOptionPane.ERROR_MESSAGE);
